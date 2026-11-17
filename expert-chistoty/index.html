@@ -402,7 +402,7 @@ function calc(o){
 }
 
 /* ================= CLIENT STATE ================= */
-function newOrder(){return {items:[],fabric:'std',dirt:[],extras:[],photos:[],zone:'in',date:null,slot:null,name:'',phone:'',addr:'Краснодар, ул. Красная, 120',ent:'',floor:'',apt:'',contact:'tg',comment:'',elevator:true,parking:false}}
+function newOrder(){return {items:[],fabric:'std',dirt:[],extras:[],photos:[],zone:'in',date:null,slot:null,name:'',phone:'',addr:'',ent:'',floor:'',apt:'',contact:'tg',comment:'',elevator:true,parking:false}}
 let order, step=0, lastDone=null, view='client', atab='req', sel=null, rfilter='all', shownTotal=0;
 function saveDraft(){try{const o=clone(order);o.photos=o.photos.slice(0,0);localStorage.setItem(KEY+'-draft',JSON.stringify({o,step}))}catch(e){}}
 function loadDraft(){try{const d=JSON.parse(localStorage.getItem(KEY+'-draft'));if(d&&d.o&&d.o.items.length){order=Object.assign(newOrder(),d.o);step=Math.min(d.step||0,3);return true}}catch(e){}order=newOrder();return false}
