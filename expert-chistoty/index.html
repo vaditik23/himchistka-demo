@@ -449,7 +449,7 @@ function step1(){
     const from=c.kind==='area'?c.ppm+' ₽/м²':'от '+rub(Math.min(...c.variants.map(v=>v.p)));
     return `<button class="tile ${counts[c.id]?'on':''}" onclick="addItem('${c.id}')">${counts[c.id]?`<span class="cnt">${counts[c.id]}</span>`:''}${svg(c.icon)}<b>${esc(c.name)}</b><small>${from}</small></button>`}).join('')}</div>`;
   h+=`<div class="card"><h3>Ваш заказ</h3>`;
-  if(!order.items.length) h+=`<div class="empty">👆 Нажмите на то, что нужно почистить.<br>Можно несколько — за комплекс скидка ${DB.settings.complexPct}%</div>`;
+  if(!order.items.length) h+=`<div class="empty">👆 Нажмите на то, что нужно почистить.${DB.settings.promo2?'<br>🎁 Второе изделие почистим бесплатно':(DB.settings.complexPct>0?'<br>Можно несколько — за комплекс от '+DB.settings.complexQty+' предметов скидка '+DB.settings.complexPct+'%':'')}</div>`;
   order.items.forEach((it,i)=>{const c=cat(it.cid); if(!c) return;
     h+=`<div class="item"><div class="itemhead">${svg(c.icon)}<b>${esc(c.name)}</b><span class="p">${rub(itemPrice(it))}</span><button class="x" onclick="delItem(${i})" aria-label="Убрать">×</button></div>`;
     if(c.kind==='count'){
