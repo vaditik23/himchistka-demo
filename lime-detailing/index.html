@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Лайм детейлинг — запись онлайн (демо)</title>
-<meta name="theme-color" content="#151922">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -249,7 +251,10 @@ a{color:var(--acc2)}
   .demobar .hint{display:none}
 }
 /* ===== detailing overrides ===== */
-.hero{background:radial-gradient(120% 90% at 100% 0%,#2a3a14 0%,#151922 55%,#10131a 100%);color:#fff;padding-bottom:18px}
+.biglogo{width:84px;height:84px;border-radius:20px;flex:none;box-shadow:0 0 0 1px #a3e63533,0 8px 30px #a3e63540}
+.hero .brand{gap:14px}
+.hero .brand b{font-size:19px}
+.hero{background:radial-gradient(90% 70% at 85% 10%,#2c4a06 0%,#0a0d07 55%,#000 100%);color:#fff;padding-bottom:18px}
 .hero p{color:#ffffffb3}
 .hero h1{color:#fff}
 .hero .brand small{color:#ffffff99}
@@ -490,7 +495,7 @@ function renderClient(){
   const S=DB.settings;
   let h=`<div class="client">`;
   if(step===0) h+=`<div class="hero">
-    <div class="brand"><div class="logo">${svg('spark','width="22" height="22" fill="none" stroke="#fff" stroke-width="1.8"')}</div><div><b>${esc(S.name)}</b><small>${esc(S.tagline)} · ${esc(S.city)}</small></div></div>
+    <div class="brand"><img class="biglogo" src="logo.jpg" alt="${esc(S.name)}"><div><b>${esc(S.name)}</b><small>${esc(S.tagline)} · ${esc(S.city)}</small></div></div>
     <h1>Сделаем вашего «ребёнка» счастливым</h1>
     <p>Выберите машину и услуги: цена и срок посчитаются сразу, а запись улетит прямо мастеру.</p>
     <div class="perks"><span class="perk">🎨 Химчистка, полировка, фары</span><span class="perk">🔊 Автозвук</span><span class="perk">🕶 Тонировка и атермалка</span><span class="perk">📍 Харьковская, 36</span></div>
@@ -685,7 +690,7 @@ function msgText(r){
 const STAT={new:['Новая','st-new'],ok:['Записан','st-ok'],work:['В работе','st-work'],done:['Выдан','st-done'],no:['Отказ','st-no']};
 function renderAdmin(){
   const nNew=DB.requests.filter(r=>r.status==='new').length;
-  let h=`<div class="admin"><div class="atop"><div class="logo">${svg('spark','width="22" height="22" fill="none" stroke="#fff" stroke-width="1.8"')}</div><h1>${esc(DB.settings.name)} <span style="color:var(--muted);font-weight:600;font-size:14px">· кабинет владельца</span></h1>
+  let h=`<div class="admin"><div class="atop"><img class="logo" src="logo.jpg" alt="" style="object-fit:cover"><h1>${esc(DB.settings.name)} <span style="color:var(--muted);font-weight:600;font-size:14px">· кабинет владельца</span></h1>
    <button class="abtn" onclick="resetDemo()">↺ Сбросить демо</button></div>
    <div class="tabs">${[['req','📥 Заявки',nNew],['tg','✈️ Уведомления'],['price','💰 Услуги и цены'],['coef','⚙️ Коэффициенты'],['set','🔗 Настройки']].map(t=>`<button class="${atab===t[0]?'on':''}" onclick="atab='${t[0]}';render()">${t[1]}${t[2]?`<span class="b">${t[2]}</span>`:''}</button>`).join('')}</div>`;
   h+={req:aReq,tg:aTg,price:aPrice,coef:aCoef,set:aSet}[atab]();
@@ -750,7 +755,7 @@ function aTg(){
     const tm=new Date(f.t).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
     return `<div class="bub">${msgText(r)}<div class="tm">${tm}</div></div>
     <div class="kb">${r.status==='new'?`<button onclick="setReq(${r.id},'status','ok')">✅ Записать</button><button onclick="openReq(${r.id})">📋 Открыть</button><button onclick="setReq(${r.id},'status','no')">❌ Отказ</button>`:`<button style="grid-column:span 3" onclick="openReq(${r.id})">${STAT[r.status][0]} · открыть</button>`}</div>`}).join('');
-  return `<div class="cols"><div><div class="tg"><div class="tghead"><div class="av">${svg('spark','width="20" height="20" fill="none" stroke="#fff" stroke-width="1.8"')}</div><div><b>${esc(DB.settings.name)} · заявки</b><small>бот</small></div></div>
+  return `<div class="cols"><div><div class="tg"><div class="tghead"><img class="av" src="logo.jpg" alt="" style="object-fit:cover"><div><b>${esc(DB.settings.name)} · заявки</b><small>бот</small></div></div>
    <div class="tgbody" id="tgbody">${msgs}</div></div></div>
    <div><div class="ac"><h3>Так выглядит уведомление</h3><p class="sub">Каждая заявка прилетает в мессенджер со всей вводной: машина, класс, услуги, состояние лака, время работы, цена и фото. Кнопки «Записать / Отказ» меняют статус прямо из чата, без захода в админку.</p>
    <div class="row">${[['tg','Telegram'],['wa','WhatsApp'],['max','Max']].map(m=>`<button class="toggle" onclick="DB.settings.channels.${m[0]}=!DB.settings.channels.${m[0]};save();render()"><span class="sw ${ch[m[0]]?'on':''}"></span>${m[1]}</button>`).join('')}</div></div>
